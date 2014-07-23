@@ -1,5 +1,6 @@
 module Tod
   class TimeOfDay
+    extend Forwardable
     include Comparable
 
     attr_reader :hour, :minute, :second, :second_of_day
@@ -65,9 +66,14 @@ module Tod
       @second_of_day <=> other.second_of_day
     end
 
+    def to_time
+      Time.local(2000,1,1, @hour, @minute, @second)
+    end
+    def_delegators :to_time, :day, :month, :year
+
     # Formats identically to Time#strftime
     def strftime(format_string)
-      Time.local(2000,1,1, @hour, @minute, @second).strftime(format_string)
+      to_time.strftime(format_string)
     end
 
     def to_s
