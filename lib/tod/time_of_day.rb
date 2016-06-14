@@ -63,6 +63,7 @@ module Tod
     end
 
     def <=>(other)
+      return nil unless other.respond_to?(:second_of_day)
       @second_of_day <=> other.second_of_day
     end
 
